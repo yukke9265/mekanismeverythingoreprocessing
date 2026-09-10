@@ -39,7 +39,6 @@ $itemMap = @{
     "everything_shard"      = "item\shard.png"
     "everything_crystal"    = "item\crystal.png"
     "everything_ingot"      = "item\ingot.png"
-    "everything_nugget"     = "item\nugget.png"
     # 原石は灰色ベースが無いので、オスミウム原石を脱色して使う
     "everything_raw_ore"    = "item\raw_osmium.png"
 }

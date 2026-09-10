@@ -27,7 +27,6 @@ public class ModEnglishLanguageProvider extends LanguageProvider {
         addItemWithNamed(ModItems.EVERYTHING_SHARD, "Everything Shard");
         addItemWithNamed(ModItems.EVERYTHING_CRYSTAL, "Everything Crystal");
         addItemWithNamed(ModItems.EVERYTHING_INGOT, "Everything Ingot");
-        addItemWithNamed(ModItems.EVERYTHING_NUGGET, "Everything Nugget");
 
         addBlock(ModBlocks.EVERYTHING_BLOCK, "Everything Block");
         add(ModBlocks.EVERYTHING_BLOCK.get().getDescriptionId() + ".named", "Everything Block (%s)");

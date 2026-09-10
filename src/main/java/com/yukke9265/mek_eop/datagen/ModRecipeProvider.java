@@ -73,9 +73,7 @@ public class ModRecipeProvider extends RecipeProvider {
         save(output, "crafting/convert_to_raw_ore", new ConvertToRawOreRecipe(CraftingBookCategory.MISC));
         save(output, "crafting/restore", new RestoreRecipe(CraftingBookCategory.MISC));
 
-        // 元情報を保ったままの詰め替え（ナゲット → インゴット、インゴット ⇄ ブロック）
-        // 注意: 「インゴット1個 → ナゲット9個」は復元レシピ（インゴット単独）と入力が同じで衝突するため用意しない
-        save(output, "crafting/ingot_from_nuggets", pack(ModItems.EVERYTHING_NUGGET, 9, ModItems.EVERYTHING_INGOT, 1));
+        // 元情報を保ったままの詰め替え（インゴット ⇄ ブロック）
         save(output, "crafting/block_from_ingots", pack(ModItems.EVERYTHING_INGOT, 9, ModItems.EVERYTHING_BLOCK, 1));
         save(output, "crafting/ingots_from_block", pack(ModItems.EVERYTHING_BLOCK, 1, ModItems.EVERYTHING_INGOT, 9));
     }

@@ -27,7 +27,6 @@ public class ModJapaneseLanguageProvider extends LanguageProvider {
         addItemWithNamed(ModItems.EVERYTHING_SHARD, "なんでもシャード");
         addItemWithNamed(ModItems.EVERYTHING_CRYSTAL, "なんでも結晶");
         addItemWithNamed(ModItems.EVERYTHING_INGOT, "なんでもインゴット");
-        addItemWithNamed(ModItems.EVERYTHING_NUGGET, "なんでもナゲット");
 
         addBlock(ModBlocks.EVERYTHING_BLOCK, "なんでもブロック");
         add(ModBlocks.EVERYTHING_BLOCK.get().getDescriptionId() + ".named", "なんでもブロック（%s）");

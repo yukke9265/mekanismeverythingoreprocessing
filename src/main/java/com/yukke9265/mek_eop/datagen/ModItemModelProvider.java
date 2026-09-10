@@ -23,7 +23,6 @@ public class ModItemModelProvider extends ItemModelProvider {
         basicItem(ModItems.EVERYTHING_SHARD.get());
         basicItem(ModItems.EVERYTHING_CRYSTAL.get());
         basicItem(ModItems.EVERYTHING_INGOT.get());
-        basicItem(ModItems.EVERYTHING_NUGGET.get());
         withExistingParent("everything_block", modLoc("block/everything_block"));
     }
 }
