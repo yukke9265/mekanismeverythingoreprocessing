@@ -1,0 +1,16 @@
+{
+  "type": "mekanismeverythingoreprocessing:injecting",
+  "chemical_input": {
+    "amount": 1,
+    "chemical": "mekanism:hydrogen_chloride"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "mekanismeverythingoreprocessing:everything_crystal"
+  },
+  "output": {
+    "count": 1,
+    "id": "mekanismeverythingoreprocessing:everything_shard"
+  },
+  "per_tick_usage": true
+}

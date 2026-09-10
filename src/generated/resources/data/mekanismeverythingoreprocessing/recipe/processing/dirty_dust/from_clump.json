@@ -1,0 +1,11 @@
+{
+  "type": "mekanismeverythingoreprocessing:crushing",
+  "input": {
+    "count": 1,
+    "item": "mekanismeverythingoreprocessing:everything_clump"
+  },
+  "output": {
+    "count": 1,
+    "id": "mekanismeverythingoreprocessing:everything_dirty_dust"
+  }
+}

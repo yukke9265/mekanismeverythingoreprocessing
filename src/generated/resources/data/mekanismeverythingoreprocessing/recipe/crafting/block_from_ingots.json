@@ -1,0 +1,7 @@
+{
+  "type": "mekanismeverythingoreprocessing:origin_pack",
+  "from": "mekanismeverythingoreprocessing:everything_ingot",
+  "from_count": 9,
+  "to": "mekanismeverythingoreprocessing:everything_block",
+  "to_count": 1
+}

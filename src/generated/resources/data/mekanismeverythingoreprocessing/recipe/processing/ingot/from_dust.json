@@ -1,0 +1,11 @@
+{
+  "type": "mekanismeverythingoreprocessing:energized_smelting",
+  "input": {
+    "count": 1,
+    "item": "mekanismeverythingoreprocessing:everything_dust"
+  },
+  "output": {
+    "count": 1,
+    "id": "mekanismeverythingoreprocessing:everything_ingot"
+  }
+}

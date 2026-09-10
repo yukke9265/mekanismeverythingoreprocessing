@@ -1,0 +1,15 @@
+{
+  "type": "mekanismeverythingoreprocessing:washing",
+  "chemical_input": {
+    "amount": 1,
+    "tag": "mekanismeverythingoreprocessing:dirty_everything_slurry"
+  },
+  "fluid_input": {
+    "amount": 5,
+    "tag": "minecraft:water"
+  },
+  "output": {
+    "amount": 1,
+    "id": "mekanismeverythingoreprocessing:clean_unknown"
+  }
+}

@@ -26,7 +26,7 @@ public class EverythingWashingRecipe extends BasicWashingRecipe {
     public ChemicalStack getOutput(FluidStack fluidStack, ChemicalStack chemicalStack) {
         ChemicalStack base = super.getOutput(fluidStack, chemicalStack);
         Chemical clean = EverythingSlurries.cleanForDirty(chemicalStack.getChemical());
-        return new ChemicalStack(clean.getAsHolder(), base.getAmount());
+        return new ChemicalStack(EverythingSlurries.holderOf(clean), base.getAmount());
     }
 
     @Override

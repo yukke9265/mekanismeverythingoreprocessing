@@ -1,0 +1,16 @@
+{
+  "type": "mekanismeverythingoreprocessing:dissolution",
+  "chemical_input": {
+    "amount": 1,
+    "chemical": "mekanism:sulfuric_acid"
+  },
+  "item_input": {
+    "count": 3,
+    "item": "mekanismeverythingoreprocessing:everything_raw_ore"
+  },
+  "output": {
+    "amount": 2000,
+    "id": "mekanismeverythingoreprocessing:dirty_unknown"
+  },
+  "per_tick_usage": true
+}

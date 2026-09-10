@@ -25,7 +25,7 @@ Mekanism joke addon: turn anything into "Everything Raw Ore", run it through the
     ordering="NONE"
     side="BOTH"
 
-# Mekanism 本体は必須。化学物質レジストリなどを使うので Mekanism の後に読み込む
+# Mekanism is required; load after it so its registries (chemicals etc.) exist.
 [[dependencies.${mod_id}]]
     modId="mekanism"
     type="required"

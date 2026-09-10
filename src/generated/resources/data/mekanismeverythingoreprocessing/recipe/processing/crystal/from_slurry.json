@@ -1,0 +1,11 @@
+{
+  "type": "mekanismeverythingoreprocessing:crystallizing",
+  "input": {
+    "amount": 200,
+    "tag": "mekanismeverythingoreprocessing:clean_everything_slurry"
+  },
+  "output": {
+    "count": 1,
+    "id": "mekanismeverythingoreprocessing:everything_crystal"
+  }
+}

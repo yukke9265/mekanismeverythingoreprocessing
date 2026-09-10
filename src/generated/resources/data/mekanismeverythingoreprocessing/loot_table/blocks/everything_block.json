@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "functions": [
+            {
+              "function": "minecraft:copy_components",
+              "include": [
+                "mekanismeverythingoreprocessing:original_item"
+              ],
+              "source": "block_entity"
+            }
+          ],
+          "name": "mekanismeverythingoreprocessing:everything_block"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "mekanismeverythingoreprocessing:blocks/everything_block"
+}

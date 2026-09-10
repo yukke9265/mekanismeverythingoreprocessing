@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 
 import com.mojang.logging.LogUtils;
 import com.yukke9265.mek_eop.chemical.EverythingSlurries;
+import com.yukke9265.mek_eop.datagen.ModDatagen;
 import com.yukke9265.mek_eop.datapack.EverythingRuntimePack;
 import com.yukke9265.mek_eop.registry.ModBlockEntities;
 import com.yukke9265.mek_eop.registry.ModBlocks;
@@ -52,6 +53,8 @@ public class MekanismEverythingOreProcessing {
         modEventBus.addListener(EverythingSlurries::onRegister);
         // スラリー用の化学物質タグを実行時データパックとして差し込む
         modEventBus.addListener(this::addRuntimePack);
+        // runData 用
+        modEventBus.addListener(ModDatagen::gatherData);
 
         // STARTUP: 登録前に必要（スラリー対象の namespace）。COMMON: ゲーム中の挙動
         modContainer.registerConfig(ModConfig.Type.STARTUP, Config.STARTUP_SPEC);

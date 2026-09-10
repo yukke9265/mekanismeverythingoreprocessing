@@ -32,7 +32,7 @@ public class EverythingDissolutionRecipe extends BasicChemicalDissolutionRecipe 
             return base;
         }
         Chemical slurry = EverythingSlurries.dirtyFor(origin.original().getItem());
-        return new ChemicalStack(slurry.getAsHolder(), base.getAmount());
+        return new ChemicalStack(EverythingSlurries.holderOf(slurry), base.getAmount());
     }
 
     @Override

@@ -15,6 +15,7 @@ import com.yukke9265.mek_eop.util.OriginHelper;
 import mekanism.api.MekanismAPI;
 import mekanism.api.chemical.Chemical;
 import mekanism.api.chemical.ChemicalBuilder;
+import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -109,6 +110,11 @@ public final class EverythingSlurries {
             return slurry.getSourceItem();
         }
         return null;
+    }
+
+    /** Chemical を Holder に包む（ChemicalStack のコンストラクタが Holder を要求するため）。 */
+    public static Holder<Chemical> holderOf(Chemical chemical) {
+        return MekanismAPI.CHEMICAL_REGISTRY.wrapAsHolder(chemical);
     }
 
     /** 登録した全スラリー（実行時データパックのタグ生成用）。 */

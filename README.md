@@ -1,25 +1,38 @@
+# Mekanism Everything Ore Processing
 
-Installation information
-=======
+Mekanism のジョークアドオン。**あらゆるアイテムを「なんでも原石（Everything Raw Ore）」に変え、Mekanism の鉱石処理チェーンに乗せて増やし、元のアイテムに戻す。**
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+- Minecraft 1.21.1 / NeoForge 21.1 / Mekanism 10.7
+- ライセンス: MIT（ベーステクスチャは MIT の Mekanism のものを灰色化して使用）
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+## 流れ
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+1. 作業台で、中央に任意アイテム・周囲 8 マスにオスミウムインゴット → **なんでも原石 ×1**
+2. Mekanism の機械で加工（比率は本家の原石と同じ）
+   - Energized Smelter / かまど: 原石 → インゴット（1x）
+   - Enrichment Chamber: 原石3 → ダスト4（約1.33x）
+   - Purification Chamber: 原石 + O₂ → クランプ2（2x）
+   - Chemical Injection Chamber: 原石3 + HCl → シャード8（約2.67x）
+   - Dissolution → Washer → Crystallizer: 原石3 + H₂SO₄ → スラリー 2000mB → 結晶10（約3.33x）
+3. **なんでもインゴット** を作業台に 1 個置く → **元アイテム**に復元
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+全ての「なんでも○○」は Data Component `original_item` に元アイテムを保持する。スラリー段階では化学物質に情報を載せられないため、**全アイテム分の Dirty / Clean スラリーを起動時に動的登録**し、スラリーの種類そのもので元アイテムを表す。
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+## Config
+
+| ファイル | キー | 内容 |
+|---|---|---|
+| `*-startup.toml` | `slurryNamespaceWhitelist` | スラリーを生成するアイテムの namespace（空 = 全部）。超大型パックで絞る用 |
+| `*-common.toml` | `originStorageMode` | `FULL_STACK`（Component も保持）/ `ITEM_ID`（アイテム種類のみ） |
+| `*-common.toml` | `allowNesting` / `maxNestingDepth` | なんでも○○自身を再変換できるか・その深さ |
+| `*-common.toml` | `blacklist` | 変換禁止アイテム（タグ `mekanismeverythingoreprocessing:blacklist` も有効） |
+
+## 開発
+
+```
+gradlew.bat build       # ビルド
+gradlew.bat runData     # src/generated/resources を再生成
+gradlew.bat runClient   # クライアント起動
+```
+
+- ベーステクスチャの再生成: `scripts/generate_base_textures.ps1`（`D:\Mekanism` のソースが必要）

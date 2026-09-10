@@ -1,0 +1,11 @@
+{
+  "type": "mekanismeverythingoreprocessing:enriching",
+  "input": {
+    "count": 3,
+    "item": "mekanismeverythingoreprocessing:everything_raw_ore"
+  },
+  "output": {
+    "count": 4,
+    "id": "mekanismeverythingoreprocessing:everything_dust"
+  }
+}

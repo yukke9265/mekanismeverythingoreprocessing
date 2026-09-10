@@ -1,0 +1,16 @@
+{
+  "type": "mekanismeverythingoreprocessing:purifying",
+  "chemical_input": {
+    "amount": 1,
+    "chemical": "mekanism:oxygen"
+  },
+  "item_input": {
+    "count": 1,
+    "item": "mekanismeverythingoreprocessing:everything_shard"
+  },
+  "output": {
+    "count": 1,
+    "id": "mekanismeverythingoreprocessing:everything_clump"
+  },
+  "per_tick_usage": true
+}
