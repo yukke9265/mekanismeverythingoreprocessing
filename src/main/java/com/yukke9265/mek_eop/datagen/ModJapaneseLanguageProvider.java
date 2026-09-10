@@ -20,16 +20,17 @@ public class ModJapaneseLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        addItemWithNamed(ModItems.EVERYTHING_RAW_ORE, "なんでも原石");
-        addItemWithNamed(ModItems.EVERYTHING_DUST, "なんでもダスト");
-        addItemWithNamed(ModItems.EVERYTHING_DIRTY_DUST, "なんでもダーティダスト");
-        addItemWithNamed(ModItems.EVERYTHING_CLUMP, "なんでもクランプ");
-        addItemWithNamed(ModItems.EVERYTHING_SHARD, "なんでもシャード");
-        addItemWithNamed(ModItems.EVERYTHING_CRYSTAL, "なんでも結晶");
-        addItemWithNamed(ModItems.EVERYTHING_INGOT, "なんでもインゴット");
+        // 元情報付きの名前は「"元アイテム名" 原石」形式（%s に元アイテム名が入る）
+        addItemWithNamed(ModItems.EVERYTHING_RAW_ORE, "なんでも原石", "\"%s\" 原石");
+        addItemWithNamed(ModItems.EVERYTHING_DUST, "なんでもダスト", "\"%s\" ダスト");
+        addItemWithNamed(ModItems.EVERYTHING_DIRTY_DUST, "なんでもダーティダスト", "\"%s\" ダーティダスト");
+        addItemWithNamed(ModItems.EVERYTHING_CLUMP, "なんでもクランプ", "\"%s\" クランプ");
+        addItemWithNamed(ModItems.EVERYTHING_SHARD, "なんでもシャード", "\"%s\" シャード");
+        addItemWithNamed(ModItems.EVERYTHING_CRYSTAL, "なんでも結晶", "\"%s\" 結晶");
+        addItemWithNamed(ModItems.EVERYTHING_INGOT, "なんでもインゴット", "\"%s\" インゴット");
 
         addBlock(ModBlocks.EVERYTHING_BLOCK, "なんでもブロック");
-        add(ModBlocks.EVERYTHING_BLOCK.get().getDescriptionId() + ".named", "なんでもブロック（%s）");
+        add(ModBlocks.EVERYTHING_BLOCK.get().getDescriptionId() + ".named", "\"%s\" ブロック");
 
         add("itemGroup." + MODID, "なんでも鉱石処理");
 
@@ -50,8 +51,8 @@ public class ModJapaneseLanguageProvider extends LanguageProvider {
         add(MODID + ".configuration.blacklist", "変換禁止アイテム");
     }
 
-    private void addItemWithNamed(DeferredItem<? extends Item> item, String name) {
+    private void addItemWithNamed(DeferredItem<? extends Item> item, String name, String namedFormat) {
         addItem(item, name);
-        add(item.get().getDescriptionId() + ".named", name + "（%s）");
+        add(item.get().getDescriptionId() + ".named", namedFormat);
     }
 }

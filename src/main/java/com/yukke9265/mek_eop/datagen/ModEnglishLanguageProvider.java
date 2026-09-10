@@ -20,16 +20,17 @@ public class ModEnglishLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        addItemWithNamed(ModItems.EVERYTHING_RAW_ORE, "Everything Raw Ore");
-        addItemWithNamed(ModItems.EVERYTHING_DUST, "Everything Dust");
-        addItemWithNamed(ModItems.EVERYTHING_DIRTY_DUST, "Dirty Everything Dust");
-        addItemWithNamed(ModItems.EVERYTHING_CLUMP, "Everything Clump");
-        addItemWithNamed(ModItems.EVERYTHING_SHARD, "Everything Shard");
-        addItemWithNamed(ModItems.EVERYTHING_CRYSTAL, "Everything Crystal");
-        addItemWithNamed(ModItems.EVERYTHING_INGOT, "Everything Ingot");
+        // 元情報付きの名前は「"元アイテム名" Raw Ore」形式（%s に元アイテム名が入る）
+        addItemWithNamed(ModItems.EVERYTHING_RAW_ORE, "Everything Raw Ore", "\"%s\" Raw Ore");
+        addItemWithNamed(ModItems.EVERYTHING_DUST, "Everything Dust", "\"%s\" Dust");
+        addItemWithNamed(ModItems.EVERYTHING_DIRTY_DUST, "Dirty Everything Dust", "Dirty \"%s\" Dust");
+        addItemWithNamed(ModItems.EVERYTHING_CLUMP, "Everything Clump", "\"%s\" Clump");
+        addItemWithNamed(ModItems.EVERYTHING_SHARD, "Everything Shard", "\"%s\" Shard");
+        addItemWithNamed(ModItems.EVERYTHING_CRYSTAL, "Everything Crystal", "\"%s\" Crystal");
+        addItemWithNamed(ModItems.EVERYTHING_INGOT, "Everything Ingot", "\"%s\" Ingot");
 
         addBlock(ModBlocks.EVERYTHING_BLOCK, "Everything Block");
-        add(ModBlocks.EVERYTHING_BLOCK.get().getDescriptionId() + ".named", "Everything Block (%s)");
+        add(ModBlocks.EVERYTHING_BLOCK.get().getDescriptionId() + ".named", "\"%s\" Block");
 
         add("itemGroup." + MODID, "Everything Ore Processing");
 
@@ -51,8 +52,8 @@ public class ModEnglishLanguageProvider extends LanguageProvider {
         add(MODID + ".configuration.blacklist", "Conversion blacklist");
     }
 
-    private void addItemWithNamed(DeferredItem<? extends Item> item, String name) {
+    private void addItemWithNamed(DeferredItem<? extends Item> item, String name, String namedFormat) {
         addItem(item, name);
-        add(item.get().getDescriptionId() + ".named", name + " (%s)");
+        add(item.get().getDescriptionId() + ".named", namedFormat);
     }
 }
