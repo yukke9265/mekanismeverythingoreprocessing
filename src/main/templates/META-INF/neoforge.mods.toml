@@ -1,0 +1,34 @@
+modLoader="javafml"
+loaderVersion="${loader_version_range}"
+license="${mod_license}"
+
+[[mods]]
+modId="${mod_id}"
+version="${mod_version}"
+displayName="${mod_name}"
+authors="yukke9265"
+description='''
+Mekanism joke addon: turn anything into "Everything Raw Ore", run it through the ore processing chain, and restore it.
+'''
+
+[[dependencies.${mod_id}]]
+    modId="neoforge"
+    type="required"
+    versionRange="[${neo_version},)"
+    ordering="NONE"
+    side="BOTH"
+
+[[dependencies.${mod_id}]]
+    modId="minecraft"
+    type="required"
+    versionRange="${minecraft_version_range}"
+    ordering="NONE"
+    side="BOTH"
+
+# Mekanism 本体は必須。化学物質レジストリなどを使うので Mekanism の後に読み込む
+[[dependencies.${mod_id}]]
+    modId="mekanism"
+    type="required"
+    versionRange="${mekanism_version_range}"
+    ordering="AFTER"
+    side="BOTH"
