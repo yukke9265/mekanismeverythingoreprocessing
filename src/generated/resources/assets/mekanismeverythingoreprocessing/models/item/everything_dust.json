@@ -1,6 +1,4 @@
 {
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "mekanismeverythingoreprocessing:item/everything_dust"
-  }
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "front"
 }

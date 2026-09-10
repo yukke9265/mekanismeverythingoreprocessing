@@ -39,6 +39,11 @@ public final class ModItems {
                 EVERYTHING_CRYSTAL, EVERYTHING_INGOT, EVERYTHING_BLOCK);
     }
 
+    /** 見た目本体のモデル名（登録名のモデルは描画を独自レンダラーに任せるため、実体は別名で持つ）。 */
+    public static String baseModelPath(String itemName) {
+        return itemName + "_base";
+    }
+
     private static DeferredItem<EverythingItem> registerEverything(String name) {
         return ITEMS.register(name, () -> new EverythingItem(new Item.Properties()));
     }

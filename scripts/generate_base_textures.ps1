@@ -1,5 +1,6 @@
 # なんでも○○のベーステクスチャを Mekanism (MIT) の灰色ベースから作る。
 # 目的: ティント（power 由来の色）を乗せる前提の、彩度ゼロの 16x16 PNG を用意する。
+#       Mekanism と同じく「layer0 = ベース（ティント対象）」「layer1 = オーバーレイ（ティント無しのハイライト）」の 2 層構成。
 # 前提: D:\Mekanism にソースがあること。
 # 結果: src/main/resources/assets/mekanismeverythingoreprocessing/textures/{item,block}/ に PNG を出力する。
 
@@ -31,19 +32,29 @@ function Convert-ToGray {
     Write-Host "wrote $Dest"
 }
 
-# アイテム: Mekanism 側に灰色ベースがあるものはそのまま灰色化して使う
-$itemMap = @{
+# ベース（layer0）。Mekanism 側の灰色ベースをそのまま使う。原石だけは無いのでオスミウム原石を脱色する
+$baseMap = @{
     "everything_dust"       = "item\dust.png"
     "everything_dirty_dust" = "item\dirty_dust.png"
     "everything_clump"      = "item\clump.png"
     "everything_shard"      = "item\shard.png"
     "everything_crystal"    = "item\crystal.png"
     "everything_ingot"      = "item\ingot.png"
-    # 原石は灰色ベースが無いので、オスミウム原石を脱色して使う
     "everything_raw_ore"    = "item\raw_osmium.png"
 }
-foreach ($name in $itemMap.Keys) {
-    Convert-ToGray -Source (Join-Path $MekanismRoot $itemMap[$name]) -Dest (Join-Path $OutRoot "item\$name.png")
+foreach ($name in $baseMap.Keys) {
+    Convert-ToGray -Source (Join-Path $MekanismRoot $baseMap[$name]) -Dest (Join-Path $OutRoot "item\$name.png")
+}
+
+# オーバーレイ（layer1）。Mekanism にあるものだけ
+$overlayMap = @{
+    "everything_dirty_dust" = "item\dirty_dust_overlay.png"
+    "everything_clump"      = "item\clump_overlay.png"
+    "everything_shard"      = "item\shard_overlay.png"
+    "everything_crystal"    = "item\crystal_overlay.png"
+}
+foreach ($name in $overlayMap.Keys) {
+    Convert-ToGray -Source (Join-Path $MekanismRoot $overlayMap[$name]) -Dest (Join-Path $OutRoot "item\${name}_overlay.png")
 }
 
 # ブロック: オスミウムブロックを脱色

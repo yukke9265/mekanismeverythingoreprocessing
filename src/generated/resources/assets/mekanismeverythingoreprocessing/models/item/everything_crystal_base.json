@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "mekanismeverythingoreprocessing:item/everything_crystal",
+    "layer1": "mekanismeverythingoreprocessing:item/everything_crystal_overlay"
+  }
+}
