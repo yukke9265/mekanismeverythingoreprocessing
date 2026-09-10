@@ -29,8 +29,10 @@ import mekanism.api.recipes.ingredients.creator.IngredientCreatorAccess;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.RecipeProvider;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.world.item.ItemStack;
@@ -39,6 +41,7 @@ import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.ItemLike;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.registries.DeferredHolder;
 
 /**
@@ -70,6 +73,17 @@ public class ModRecipeProvider extends RecipeProvider {
     // ------------------------------------------------------------ クラフト
 
     private void buildCraftingRecipes(RecipeOutput output) {
+        // 元情報なしの「なんでも原石」: オスミウム原石をガラス 8 個で囲む（変換レシピの触媒）
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.EVERYTHING_RAW_ORE.get())
+                .pattern("GGG")
+                .pattern("GOG")
+                .pattern("GGG")
+                .define('G', Tags.Items.GLASS_BLOCKS)
+                .define('O', ModTags.Items.RAW_OSMIUM)
+                .unlockedBy("has_raw_osmium", has(ModTags.Items.RAW_OSMIUM))
+                .save(output, MekanismEverythingOreProcessing.rl("crafting/blank_raw_ore"));
+
+        // 元情報なしの原石を中央に、周囲 8 マスを同じ任意アイテムで囲む → その元情報を持つ原石 ×8
         save(output, "crafting/convert_to_raw_ore", new ConvertToRawOreRecipe(CraftingBookCategory.MISC));
         save(output, "crafting/restore", new RestoreRecipe(CraftingBookCategory.MISC));
 

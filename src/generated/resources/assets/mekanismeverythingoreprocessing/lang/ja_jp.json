@@ -26,7 +26,7 @@
   "mekanismeverythingoreprocessing.configuration.originStorageMode": "元アイテムの保存形式",
   "mekanismeverythingoreprocessing.configuration.slurryNamespaceWhitelist": "スラリー生成対象の namespace",
   "tooltip.mekanismeverythingoreprocessing.nesting": "入れ子の深さ: %s",
-  "tooltip.mekanismeverythingoreprocessing.no_origin": "元: 不明（復元できません）",
+  "tooltip.mekanismeverythingoreprocessing.no_origin": "元: なし（同じアイテム8個で囲むと刻印されます）",
   "tooltip.mekanismeverythingoreprocessing.origin": "元: %s",
   "tooltip.mekanismeverythingoreprocessing.power": "パワー: %s"
 }

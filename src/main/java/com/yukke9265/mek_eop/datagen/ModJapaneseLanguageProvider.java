@@ -34,7 +34,7 @@ public class ModJapaneseLanguageProvider extends LanguageProvider {
         add("itemGroup." + MODID, "なんでも鉱石処理");
 
         add("tooltip." + MODID + ".origin", "元: %s");
-        add("tooltip." + MODID + ".no_origin", "元: 不明（復元できません）");
+        add("tooltip." + MODID + ".no_origin", "元: なし（同じアイテム8個で囲むと刻印されます）");
         add("tooltip." + MODID + ".nesting", "入れ子の深さ: %s");
         add("tooltip." + MODID + ".power", "パワー: %s");
 

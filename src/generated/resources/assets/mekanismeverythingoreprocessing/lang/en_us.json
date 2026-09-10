@@ -26,7 +26,7 @@
   "mekanismeverythingoreprocessing.configuration.originStorageMode": "Origin storage mode",
   "mekanismeverythingoreprocessing.configuration.slurryNamespaceWhitelist": "Slurry namespace whitelist",
   "tooltip.mekanismeverythingoreprocessing.nesting": "Nesting depth: %s",
-  "tooltip.mekanismeverythingoreprocessing.no_origin": "Origin: unknown (cannot be restored)",
+  "tooltip.mekanismeverythingoreprocessing.no_origin": "Origin: none (surround with 8 identical items to imprint)",
   "tooltip.mekanismeverythingoreprocessing.origin": "Origin: %s",
   "tooltip.mekanismeverythingoreprocessing.power": "Power: %s"
 }

@@ -34,7 +34,7 @@ public class ModEnglishLanguageProvider extends LanguageProvider {
         add("itemGroup." + MODID, "Everything Ore Processing");
 
         add("tooltip." + MODID + ".origin", "Origin: %s");
-        add("tooltip." + MODID + ".no_origin", "Origin: unknown (cannot be restored)");
+        add("tooltip." + MODID + ".no_origin", "Origin: none (surround with 8 identical items to imprint)");
         add("tooltip." + MODID + ".nesting", "Nesting depth: %s");
         add("tooltip." + MODID + ".power", "Power: %s");
 

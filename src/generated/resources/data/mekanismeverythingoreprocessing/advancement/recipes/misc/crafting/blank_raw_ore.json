@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_raw_osmium": {
+      "conditions": {
+        "items": [
+          {
+            "items": "#c:raw_materials/osmium"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "mekanismeverythingoreprocessing:crafting/blank_raw_ore"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_raw_osmium"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "mekanismeverythingoreprocessing:crafting/blank_raw_ore"
+    ]
+  }
+}

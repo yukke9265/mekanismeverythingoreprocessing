@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "G": {
+      "tag": "c:glass_blocks"
+    },
+    "O": {
+      "tag": "c:raw_materials/osmium"
+    }
+  },
+  "pattern": [
+    "GGG",
+    "GOG",
+    "GGG"
+  ],
+  "result": {
+    "count": 1,
+    "id": "mekanismeverythingoreprocessing:everything_raw_ore"
+  }
+}

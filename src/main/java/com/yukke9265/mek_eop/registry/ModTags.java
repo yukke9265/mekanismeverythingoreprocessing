@@ -22,9 +22,9 @@ public final class ModTags {
         /** 変換禁止アイテム。 */
         public static final TagKey<Item> BLACKLIST = ItemTags.create(MekanismEverythingOreProcessing.rl("blacklist"));
 
-        /** 変換レシピの周囲8マスに使う素材（c:ingots/osmium）。 */
-        public static final TagKey<Item> CONVERSION_CATALYST = TagKey.create(Registries.ITEM,
-                ResourceLocation.fromNamespaceAndPath("c", "ingots/osmium"));
+        /** 元情報なしのなんでも原石を作る素材（c:raw_materials/osmium）。 */
+        public static final TagKey<Item> RAW_OSMIUM = TagKey.create(Registries.ITEM,
+                ResourceLocation.fromNamespaceAndPath("c", "raw_materials/osmium"));
     }
 
     public static final class Chemicals {
