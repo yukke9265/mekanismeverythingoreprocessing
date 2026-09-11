@@ -50,7 +50,7 @@ public class ModEnglishLanguageProvider extends LanguageProvider {
         add("chemical." + MODID + ".clean_everything_slurry.unknown", "\"Unknown\" Clean Slurry");
 
         // Config 画面
-        add(MODID + ".configuration.slurryNamespaceWhitelist", "Slurry namespace whitelist");
+        add(MODID + ".configuration.slurryNamespaceWhitelist", "Slurry namespaces (empty = almost all; heavy on big packs)");
         add(MODID + ".configuration.originStorageMode", "Origin storage mode (ITEM_ID disables nesting)");
         add(MODID + ".configuration.allowNesting", "Allow nesting (ignored under ITEM_ID; dissolution still rejects nests)");
         add(MODID + ".configuration.maxNestingDepth", "Max nesting depth");

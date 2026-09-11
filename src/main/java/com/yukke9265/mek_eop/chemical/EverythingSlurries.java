@@ -19,19 +19,27 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
 /**
- * 全アイテム分のなんでもスラリー（Dirty / Clean）を動的に登録し、アイテム ⇄ スラリーの対応表を持つ。
+ * なんでもスラリー（Dirty / Clean）を動的に登録し、アイテム ⇄ スラリーの対応表を持つ。
  * <p>
  * 前提: Mekanism の化学物質レジストリはバニラのアイテムレジストリより後に登録イベントが来るので、
  * その時点で BuiltInRegistries.ITEM を走査できる。
  * <p>
- * ID の形: mekanismeverythingoreprocessing:dirty/<item namespace>/<item path>
+ * 負荷: 対象アイテム 1 つにつき化学物質が 2 つ増える。巨大パックでは
+ * {@code slurryNamespaceWhitelist} で namespace を絞ること（空＝ほぼ全部）。
+ * air・自 mod アイテムは常に除外する。
+ * <p>
+ * ID の形: mekanismeverythingoreprocessing:dirty/&lt;item namespace&gt;/&lt;item path&gt;
  */
 public final class EverythingSlurries {
     private EverythingSlurries() {
     }
+
+    /** この件数を超えたら「絞った方がよい」警告を出す。 */
+    private static final int WARN_PAIR_THRESHOLD = 500;
 
     private static final Map<Item, EverythingSlurry> DIRTY_BY_ITEM = new IdentityHashMap<>();
     private static final Map<Item, EverythingSlurry> CLEAN_BY_ITEM = new IdentityHashMap<>();
@@ -58,10 +66,12 @@ public final class EverythingSlurries {
             ALL.add(unknownDirty);
             ALL.add(unknownClean);
 
-            int count = 0;
+            int registered = 0;
+            int skipped = 0;
             for (Item item : BuiltInRegistries.ITEM) {
                 ResourceLocation itemId = BuiltInRegistries.ITEM.getKey(item);
-                if (!Config.isSlurryTarget(itemId)) {
+                if (!shouldRegisterPair(item, itemId)) {
+                    skipped++;
                     continue;
                 }
                 // ワールドに依存しない色（ソルト 0）で見分けだけ付ける
@@ -74,10 +84,45 @@ public final class EverythingSlurries {
                 CLEAN_BY_ITEM.put(item, clean);
                 ALL.add(dirty);
                 ALL.add(clean);
-                count++;
+                registered++;
             }
-            MekanismEverythingOreProcessing.LOGGER.info("Registered Everything Slurry pairs for {} items", count);
+            logRegistrationSummary(registered, skipped);
         });
+    }
+
+    /**
+     * 個別 Dirty/Clean を作る対象か。
+     * air・自 mod は無意味／循環しやすいので常に除外。あとは whitelist。
+     */
+    private static boolean shouldRegisterPair(Item item, ResourceLocation itemId) {
+        if (item == Items.AIR || itemId.equals(BuiltInRegistries.ITEM.getDefaultKey())) {
+            return false;
+        }
+        if (itemId.getNamespace().equals(MekanismEverythingOreProcessing.MODID)) {
+            return false;
+        }
+        return Config.isSlurryTarget(itemId);
+    }
+
+    private static void logRegistrationSummary(int registeredPairs, int skippedItems) {
+        int chemicals = registeredPairs * 2 + 2; // + unknown dirty/clean
+        if (Config.isSlurryWhitelistEmpty()) {
+            MekanismEverythingOreProcessing.LOGGER.warn(
+                    "slurryNamespaceWhitelist is empty: registered Everything Slurry for {} items ({} chemicals, skipped {}). "
+                            + "On large modpacks set namespaces in mekanismeverythingoreprocessing-startup.toml, "
+                            + "e.g. [\"minecraft\", \"mekanism\"]. Items outside the list still work at 1x-4x; "
+                            + "only 5x falls back to the generic slurry.",
+                    registeredPairs, chemicals, skippedItems);
+        } else if (registeredPairs >= WARN_PAIR_THRESHOLD) {
+            MekanismEverythingOreProcessing.LOGGER.warn(
+                    "Registered Everything Slurry pairs for {} items ({} chemicals, skipped {}). "
+                            + "Consider narrowing slurryNamespaceWhitelist if startup is slow.",
+                    registeredPairs, chemicals, skippedItems);
+        } else {
+            MekanismEverythingOreProcessing.LOGGER.info(
+                    "Registered Everything Slurry pairs for {} items ({} chemicals, skipped {}, whitelist={})",
+                    registeredPairs, chemicals, skippedItems, Config.SLURRY_NAMESPACE_WHITELIST.get());
+        }
     }
 
     private static ResourceLocation slurryId(String prefix, ResourceLocation itemId) {

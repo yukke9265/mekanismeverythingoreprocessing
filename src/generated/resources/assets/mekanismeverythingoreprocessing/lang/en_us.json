@@ -27,7 +27,7 @@
   "mekanismeverythingoreprocessing.configuration.blacklist": "Conversion blacklist",
   "mekanismeverythingoreprocessing.configuration.maxNestingDepth": "Max nesting depth",
   "mekanismeverythingoreprocessing.configuration.originStorageMode": "Origin storage mode (ITEM_ID disables nesting)",
-  "mekanismeverythingoreprocessing.configuration.slurryNamespaceWhitelist": "Slurry namespace whitelist",
+  "mekanismeverythingoreprocessing.configuration.slurryNamespaceWhitelist": "Slurry namespaces (empty = almost all; heavy on big packs)",
   "tooltip.mekanismeverythingoreprocessing.nesting": "Nesting depth: %s",
   "tooltip.mekanismeverythingoreprocessing.no_origin": "Origin: none (surround with 8 identical items to imprint)",
   "tooltip.mekanismeverythingoreprocessing.origin": "Origin: %s",

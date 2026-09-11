@@ -27,7 +27,7 @@
   "mekanismeverythingoreprocessing.configuration.blacklist": "変換禁止アイテム",
   "mekanismeverythingoreprocessing.configuration.maxNestingDepth": "入れ子の最大深さ",
   "mekanismeverythingoreprocessing.configuration.originStorageMode": "元アイテムの保存形式（ITEM_ID では入れ子不可）",
-  "mekanismeverythingoreprocessing.configuration.slurryNamespaceWhitelist": "スラリー生成対象の namespace",
+  "mekanismeverythingoreprocessing.configuration.slurryNamespaceWhitelist": "スラリー対象namespace（空＝ほぼ全部・大型パックでは重い）",
   "tooltip.mekanismeverythingoreprocessing.nesting": "入れ子の深さ: %s",
   "tooltip.mekanismeverythingoreprocessing.no_origin": "元: なし（同じアイテム8個で囲むと刻印されます）",
   "tooltip.mekanismeverythingoreprocessing.origin": "元: %s",

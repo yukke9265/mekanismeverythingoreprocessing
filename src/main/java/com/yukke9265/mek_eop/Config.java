@@ -27,10 +27,13 @@ public final class Config {
 
     private static final ModConfigSpec.Builder STARTUP_BUILDER = new ModConfigSpec.Builder();
 
-    /** スラリーを生成するアイテムの namespace 一覧。空なら全アイテムが対象。 */
+    /** スラリーを生成するアイテムの namespace 一覧。空なら（自mod・air 以外の）全アイテムが対象。 */
     public static final ModConfigSpec.ConfigValue<List<? extends String>> SLURRY_NAMESPACE_WHITELIST = STARTUP_BUILDER
-            .comment("Namespaces of items that get their own Everything Slurry pair.",
-                    "Empty = every registered item. Restrict this on huge modpacks to reduce registry size.")
+            .comment("Namespaces of items that get their own Dirty/Clean Everything Slurry pair (2 chemicals each).",
+                    "Empty = ALL items except air and this mod's own items. That can mean thousands of chemicals",
+                    "and slower startup on large modpacks — set this list when possible.",
+                    "Example for a lighter pack: [\"minecraft\", \"mekanism\"]",
+                    "Items outside the list still convert/process at 1x-4x; only 5x (dissolution) falls back to the generic slurry.")
             .defineListAllowEmpty("slurryNamespaceWhitelist", List.of(), () -> "", Config::isValidNamespace);
 
     public static final ModConfigSpec STARTUP_SPEC = STARTUP_BUILDER.build();
@@ -90,13 +93,23 @@ public final class Config {
         return false;
     }
 
-    /** このアイテムにスラリーを生成するか（STARTUP 設定）。 */
+    /**
+     * このアイテムに個別スラリーを生成するか（STARTUP 設定）。
+     * <p>
+     * whitelist が空なら全 namespace対象。絞ると起動が軽くなる代わりに、
+     * 対象外アイテムの 5x は汎用スラリー（元情報なし結晶）になる。
+     */
     public static boolean isSlurryTarget(ResourceLocation itemId) {
         List<? extends String> whitelist = SLURRY_NAMESPACE_WHITELIST.get();
         if (whitelist.isEmpty()) {
             return true;
         }
         return whitelist.contains(itemId.getNamespace());
+    }
+
+    /** whitelist が空（＝全登録モード）か。ログ警告用。 */
+    public static boolean isSlurryWhitelistEmpty() {
+        return SLURRY_NAMESPACE_WHITELIST.get().isEmpty();
     }
 
     /**

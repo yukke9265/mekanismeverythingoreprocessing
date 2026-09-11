@@ -49,7 +49,7 @@ public class ModJapaneseLanguageProvider extends LanguageProvider {
         add("chemical." + MODID + ".clean_everything_slurry", "\"%s\" クリーンスラリー");
         add("chemical." + MODID + ".clean_everything_slurry.unknown", "\"不明\" クリーンスラリー");
 
-        add(MODID + ".configuration.slurryNamespaceWhitelist", "スラリー生成対象の namespace");
+        add(MODID + ".configuration.slurryNamespaceWhitelist", "スラリー対象namespace（空＝ほぼ全部・大型パックでは重い）");
         add(MODID + ".configuration.originStorageMode", "元アイテムの保存形式（ITEM_ID では入れ子不可）");
         add(MODID + ".configuration.allowNesting", "入れ子を許可（ITEM_ID 時は無効・溶解は常に入れ子拒否）");
         add(MODID + ".configuration.maxNestingDepth", "入れ子の最大深さ");
