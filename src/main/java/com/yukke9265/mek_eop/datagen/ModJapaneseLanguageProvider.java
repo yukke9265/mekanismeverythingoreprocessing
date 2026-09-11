@@ -40,8 +40,8 @@ public class ModJapaneseLanguageProvider extends LanguageProvider {
         add("tooltip." + MODID + ".power", "パワー: %s");
 
         add("jei." + MODID + ".special_crafting", "なんでも特殊クラフト");
-        add("jei." + MODID + ".convert.info", "中央: 空白の原石 / 周囲: 同じアイテム8個");
-        add("jei." + MODID + ".restore.info", "元情報付きなんでもインゴットを1個だけ置く");
+        add("jei." + MODID + ".convert.info", "中央: 空白の原石\n周囲: 同じアイテム×8");
+        add("jei." + MODID + ".restore.info", "元情報付き\nなんでもインゴット×1");
 
         // アイテム名と同じ「"元アイテム" ～」形式
         add("chemical." + MODID + ".dirty_everything_slurry", "\"%s\" ダーティスラリー");

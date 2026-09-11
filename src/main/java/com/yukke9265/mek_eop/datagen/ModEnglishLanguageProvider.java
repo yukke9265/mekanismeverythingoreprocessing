@@ -40,8 +40,8 @@ public class ModEnglishLanguageProvider extends LanguageProvider {
         add("tooltip." + MODID + ".power", "Power: %s");
 
         add("jei." + MODID + ".special_crafting", "Everything Special Crafting");
-        add("jei." + MODID + ".convert.info", "Center: blank raw ore / Ring: 8 identical items");
-        add("jei." + MODID + ".restore.info", "Single Everything Ingot with origin");
+        add("jei." + MODID + ".convert.info", "Center: blank raw ore\nRing: 8 same items");
+        add("jei." + MODID + ".restore.info", "One Everything Ingot\nwith origin");
 
         // アイテム名と同じ「"元アイテム" ～」形式
         add("chemical." + MODID + ".dirty_everything_slurry", "\"%s\" Dirty Slurry");

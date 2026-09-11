@@ -22,12 +22,13 @@ import org.jetbrains.annotations.Nullable;
 public class SpecialCraftingRecipeCategory implements IRecipeCategory<SpecialCraftingJeiRecipe> {
 
     private static final int WIDTH = 116;
-    private static final int HEIGHT = 64;
+    private static final int HEIGHT = 72;
     private static final int GRID_X = 0;
     private static final int GRID_Y = 0;
     private static final int OUTPUT_X = 90;
     private static final int OUTPUT_Y = 18;
-    private static final int INFO_Y = 54;
+    private static final int INFO_Y = 56;
+    private static final int INFO_COLOR = 0x404040;
 
     private final IDrawable background;
     private final IDrawable icon;
@@ -97,9 +98,13 @@ public class SpecialCraftingRecipeCategory implements IRecipeCategory<SpecialCra
         slot.draw(guiGraphics, OUTPUT_X, OUTPUT_Y);
         arrow.draw(guiGraphics, 66, 19);
 
+        // 説明文はパネル幅で折り返す（はみ出し防止）
         Minecraft minecraft = Minecraft.getInstance();
-        guiGraphics.drawString(minecraft.font,
-                Component.translatable(recipe.infoKey()),
-                0, INFO_Y, 0x404040, false);
+        var lines = minecraft.font.split(Component.translatable(recipe.infoKey()), WIDTH);
+        int y = INFO_Y;
+        for (var line : lines) {
+            guiGraphics.drawString(minecraft.font, line, 0, y, INFO_COLOR, false);
+            y += minecraft.font.lineHeight;
+        }
     }
 }
