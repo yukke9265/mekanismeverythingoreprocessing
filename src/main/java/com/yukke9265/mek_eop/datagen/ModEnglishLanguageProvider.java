@@ -51,8 +51,8 @@ public class ModEnglishLanguageProvider extends LanguageProvider {
 
         // Config 画面
         add(MODID + ".configuration.slurryNamespaceWhitelist", "Slurry namespace whitelist");
-        add(MODID + ".configuration.originStorageMode", "Origin storage mode");
-        add(MODID + ".configuration.allowNesting", "Allow nesting");
+        add(MODID + ".configuration.originStorageMode", "Origin storage mode (ITEM_ID disables nesting)");
+        add(MODID + ".configuration.allowNesting", "Allow nesting (ignored under ITEM_ID; dissolution still rejects nests)");
         add(MODID + ".configuration.maxNestingDepth", "Max nesting depth");
         add(MODID + ".configuration.blacklist", "Conversion blacklist");
     }

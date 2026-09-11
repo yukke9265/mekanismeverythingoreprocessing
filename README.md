@@ -24,8 +24,8 @@ Mekanism のジョークアドオン。**あらゆるアイテムを「なんで
 | ファイル | キー | 内容 |
 |---|---|---|
 | `*-startup.toml` | `slurryNamespaceWhitelist` | スラリーを生成するアイテムの namespace（空 = 全部）。超大型パックで絞る用 |
-| `*-common.toml` | `originStorageMode` | `FULL_STACK`（Component も保持）/ `ITEM_ID`（アイテム種類のみ） |
-| `*-common.toml` | `allowNesting` / `maxNestingDepth` | なんでも○○自身を再変換できるか・その深さ |
+| `*-common.toml` | `originStorageMode` | `FULL_STACK`（既定・Component 保持）/ `ITEM_ID`（種類のみ・**入れ子不可**） |
+| `*-common.toml` | `allowNesting` / `maxNestingDepth` | 入れ子変換の許可（**既定 false**）。`ITEM_ID` のときは強制オフ。許可時も溶解（5x）は入れ子を拒否 |
 | `*-common.toml` | `blacklist` | 変換禁止アイテム（タグ `mekanismeverythingoreprocessing:blacklist` も有効） |
 
 ## 開発

@@ -41,15 +41,20 @@ public final class Config {
 
     public static final ModConfigSpec.EnumValue<OriginStorageMode> ORIGIN_STORAGE_MODE = COMMON_BUILDER
             .comment("How the original item is stored inside Everything items.",
-                    "FULL_STACK keeps data components (enchantments etc.), ITEM_ID keeps only the item type.")
+                    "FULL_STACK keeps data components (enchantments etc.).",
+                    "ITEM_ID keeps only the item type (drops nested origins / components).",
+                    "ITEM_ID forces nesting off regardless of allowNesting.")
             .defineEnum("originStorageMode", OriginStorageMode.FULL_STACK);
 
     public static final ModConfigSpec.BooleanValue ALLOW_NESTING = COMMON_BUILDER
-            .comment("Allow converting Everything items themselves (Everything Raw Ore of Everything Raw Ore ...).")
-            .define("allowNesting", true);
+            .comment("Allow converting Everything items that already have an origin (nesting).",
+                    "Default false. Ignored (treated as false) when originStorageMode is ITEM_ID,",
+                    "because ITEM_ID cannot preserve nested original_item components.",
+                    "Even when true, Chemical Dissolution still rejects nested items (slurry cannot store nesting).")
+            .define("allowNesting", false);
 
     public static final ModConfigSpec.IntValue MAX_NESTING_DEPTH = COMMON_BUILDER
-            .comment("Maximum nesting depth when allowNesting is true.")
+            .comment("Maximum nesting depth when nesting is effectively allowed (see allowNesting).")
             .defineInRange("maxNestingDepth", 4, 1, 32);
 
     public static final ModConfigSpec.ConfigValue<List<? extends String>> BLACKLIST = COMMON_BUILDER
@@ -92,5 +97,17 @@ public final class Config {
             return true;
         }
         return whitelist.contains(itemId.getNamespace());
+    }
+
+    /**
+     * 入れ子変換が実際に許されるか。
+     * <p>
+     * ITEM_ID モードでは内側の original_item を保存できないので、設定値に関わらず常に false。
+     */
+    public static boolean isNestingEffectivelyAllowed() {
+        if (ORIGIN_STORAGE_MODE.get() == OriginStorageMode.ITEM_ID) {
+            return false;
+        }
+        return ALLOW_NESTING.get();
     }
 }

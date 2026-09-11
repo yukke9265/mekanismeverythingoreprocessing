@@ -87,14 +87,25 @@ public final class OriginHelper {
         if (Config.isBlacklistedById(id) || source.is(ModTags.Items.BLACKLIST)) {
             return false;
         }
-        // 入れ子（なんでも○○をさらに変換）の制限
+        // 入れ子（元情報を持つなんでも○○をさらに変換）の制限
+        // ITEM_ID モードでは内側 Component を残せないので常に禁止
         if (hasOrigin(source)) {
-            if (!Config.ALLOW_NESTING.get()) {
+            if (!Config.isNestingEffectivelyAllowed()) {
                 return false;
             }
             return nestingDepth(source) < Config.MAX_NESTING_DEPTH.get();
         }
         return true;
+    }
+
+    /**
+     * 5x（溶解）に回してよいか。
+     * <p>
+     * スラリーはアイテム種類しか覚えられないので、入れ子（深さ 2 以上）は拒否する。
+     * 深さ 0（元情報なし）や深さ 1（素のアイテムが元）は OK。
+     */
+    public static boolean canDissolve(ItemStack stack) {
+        return nestingDepth(stack) <= 1;
     }
 
     /** 入れ子の深さ。元情報を持たないアイテムは 0。 */
