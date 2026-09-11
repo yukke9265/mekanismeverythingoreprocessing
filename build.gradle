@@ -78,8 +78,10 @@ neoForge {
 
         data {
             data()
-            // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
-            // gameDirectory = project.file('run-data')
+            // runData は JSON 生成だけが目的なので、通常プレイ用の run ディレクトリを共有しません。
+            // 共有したままだと run/mods に入っている外部 mod まで datagen 起動時に読み込まれ、
+            // datagen 非対応の mod（例: Mouse Tweaks）が初期化に失敗して runData 全体が止まります。
+            gameDirectory = project.file('run-data')
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
