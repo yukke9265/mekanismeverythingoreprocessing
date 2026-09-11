@@ -12,10 +12,10 @@ import net.minecraft.world.item.crafting.SingleRecipeInput;
 import net.minecraft.world.item.crafting.SmeltingRecipe;
 
 /**
- * 繝舌ル繝ｩ縺九∪縺ｩ逕ｨ縺ｮ邊ｾ骭ｬ繝ｬ繧ｷ繝斐ょ・蜉帙↓蜈･蜉帙・蜈・ュ蝣ｱ繧偵さ繝斐・縺吶ｋ縲・
+ * バニラかまど用の精錬レシピ。出力に入力の元情報をコピーする。
  * <p>
- * isSpecial 繧・true 縺ｫ縺励※縲｀ekanism 縺後ヰ繝九Λ邊ｾ骭ｬ繧・Energized Smelter 縺ｸ蜿悶ｊ霎ｼ繧蜃ｦ逅・ｼ・omponent 縺梧ｶ医∴繧具ｼ峨°繧蛾勁螟悶☆繧九・
- * Energized Smelter 蛛ｴ縺ｯ mekanism:smelting 縺ｮ蟆ら畑繝ｬ繧ｷ繝斐〒蟇ｾ蠢懊☆繧九・
+ * isSpecial を true にして、Mekanism がバニラ精錬を Energized Smelter へ取り込む処理（Component が消える）から除外する。
+ * Energized Smelter 側は mekanism:smelting の専用レシピで対応する。
  */
 public class OriginCopyFurnaceRecipe extends SmeltingRecipe {
 

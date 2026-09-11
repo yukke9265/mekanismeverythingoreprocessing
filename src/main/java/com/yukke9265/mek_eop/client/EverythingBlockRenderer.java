@@ -6,6 +6,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.yukke9265.mek_eop.block.EverythingBlockEntity;
 import com.yukke9265.mek_eop.component.OriginalItem;
+import com.yukke9265.mek_eop.util.OriginDisplay;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.LightTexture;
@@ -45,7 +46,12 @@ public class EverythingBlockRenderer implements BlockEntityRenderer<EverythingBl
         if (origin == null) {
             return;
         }
-        renderOriginOnFaces(origin.original(), poseStack, buffer, packedLight, packedOverlay, blockEntity.getLevel());
+        // 入れ子のなんでも○○はほどいてから描く（BEWLR 再帰防止）
+        ItemStack icon = OriginDisplay.iconStack(origin.original());
+        if (icon.isEmpty()) {
+            return;
+        }
+        renderOriginOnFaces(icon, poseStack, buffer, packedLight, packedOverlay, blockEntity.getLevel());
     }
 
     /**

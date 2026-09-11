@@ -29,26 +29,26 @@ import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraft.tags.TagKey;
 
 /**
- * 螳溯｡梧凾縺ｫ荳ｭ霄ｫ繧剃ｽ懊ｋ繝・・繧ｿ繝代ャ繧ｯ縲・
+ * 実行時に中身を作るデータパック。
  * <p>
- * 逶ｮ逧・ 蜍慕噪縺ｫ逋ｻ骭ｲ縺励◆縺ｪ繧薙〒繧ゅせ繝ｩ繝ｪ繝ｼ繧貞喧蟄ｦ迚ｩ雉ｪ繧ｿ繧ｰ縺ｫ蜈･繧後ｋ縲・
- * 繧ｿ繧ｰ縺ｯ繝・・繧ｿ繝代ャ繧ｯ逕ｱ譚･縺ｪ縺ｮ縺ｧ縲［od 縺ｮ jar 縺ｫ髱咏噪縺ｫ鄂ｮ縺上％縺ｨ縺後〒縺阪↑縺・ｼ医い繧､繝・Β讒区・縺檎腸蠅・＃縺ｨ縺ｫ驕輔≧・峨・
+ * 目的: 動的に登録したなんでもスラリーを化学物質タグに入れる。
+ * タグはデータパック経由なので、Mod の jar に静的に置けない（アイテム数ごとに違う）。
  * <p>
- * 逕滓・縺吶ｋ繧ゅ・:
+ * 生成するもの:
  * <ul>
- * <li>mekanismeverythingoreprocessing:dirty_everything_slurry / clean_everything_slurry・医Ξ繧ｷ繝斐・蜈･蜉帷畑・・/li>
- * <li>mekanism:dirty / mekanism:clean・・ekanism 縺ｮ陦ｨ遉ｺ逕ｨ蛻・｡槭↓霑ｽ蜉・・/li>
- * <li>c:hidden_from_recipe_viewers・・EI 縺ｨ繧ｯ繝ｪ繧ｨ繧､繝・ぅ繝悶ち繝悶°繧蛾國縺呻ｼ・/li>
+ * <li>mekanismeverythingoreprocessing:dirty_everything_slurry / clean_everything_slurry（レシピの入力用）</li>
+ * <li>mekanism:dirty / mekanism:clean（Mekanism の表示用分類に追加）</li>
+ * <li>c:hidden_from_recipe_viewers（JEI とクリエイティブタブから隠す）</li>
  * </ul>
  */
 public class EverythingRuntimePack extends AbstractPackResources {
 
     public static final String PACK_ID = MekanismEverythingOreProcessing.MODID + "_runtime";
 
-    /** 1.21.1 縺ｮ繝・・繧ｿ繝代ャ繧ｯ蠖｢蠑上・*/
+    /** 1.21.1 のデータパック形式。 */
     private static final int PACK_FORMAT = 48;
 
-    /** 逕滓・貂医∩繝輔ぃ繧､繝ｫ縲ゅく繝ｼ縺ｯ "data/..." 縺九ｉ蟋九∪繧狗嶌蟇ｾ繝代せ縲・*/
+    /** 生成済みファイル。キーは "data/..." から始まる相対パス。 */
     private final Map<ResourceLocation, byte[]> files = new LinkedHashMap<>();
 
     public EverythingRuntimePack(PackLocationInfo location) {
@@ -56,7 +56,7 @@ public class EverythingRuntimePack extends AbstractPackResources {
         buildFiles();
     }
 
-    // ------------------------------------------------------------ 荳ｭ霄ｫ縺ｮ逕滓・
+    // ------------------------------------------------------------ 中身の生成
 
     private void buildFiles() {
         JsonArray dirtyIds = new JsonArray();
@@ -92,7 +92,7 @@ public class EverythingRuntimePack extends AbstractPackResources {
         files.put(file, json.toString().getBytes(StandardCharsets.UTF_8));
     }
 
-    // ------------------------------------------------------------ PackResources 螳溯｣・
+    // ------------------------------------------------------------ PackResources 実装
 
     @Nullable
     @Override
@@ -141,7 +141,7 @@ public class EverythingRuntimePack extends AbstractPackResources {
 
     @Override
     public void close() {
-        // 繝｡繝｢繝ｪ荳翫・繝・・繧ｿ縺縺代↑縺ｮ縺ｧ髢峨§繧九ｂ縺ｮ縺ｯ辟｡縺・
+        // メモリ上のデータだけなので閉じるものはない
     }
 
     private static IoSupplier<InputStream> supplierOf(byte[] data) {

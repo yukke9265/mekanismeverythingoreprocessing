@@ -32,6 +32,11 @@ repositories {
         name = 'ModMaven'
         url = 'https://modmaven.dev/'
     }
+    // JEI
+    maven {
+        name = 'BlameJared'
+        url = 'https://maven.blamejared.com'
+    }
 }
 
 base {
@@ -125,6 +130,10 @@ dependencies {
     // Mekanism: API はコンパイル時に参照、本体は runClient / runData 用に実行時のみ読み込む
     compileOnly "mekanism:Mekanism:${mekanism_version}:api"
     localRuntime "mekanism:Mekanism:${mekanism_version}"
+
+    // JEI: 特殊クラフトの説明表示用。本体は run/mods の jar でもよいので localRuntime は付けない
+    compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+    compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.

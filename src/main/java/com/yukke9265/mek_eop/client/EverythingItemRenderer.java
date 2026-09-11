@@ -4,6 +4,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import com.yukke9265.mek_eop.MekanismEverythingOreProcessing;
 import com.yukke9265.mek_eop.component.OriginalItem;
 import com.yukke9265.mek_eop.registry.ModItems;
+import com.yukke9265.mek_eop.util.OriginDisplay;
 import com.yukke9265.mek_eop.util.OriginHelper;
 
 import net.minecraft.client.Minecraft;
@@ -73,13 +74,17 @@ public class EverythingItemRenderer extends BlockEntityWithoutLevelRenderer {
         if (origin == null) {
             return;
         }
+        ItemStack icon = OriginDisplay.iconStack(origin.original());
+        if (icon.isEmpty()) {
+            return;
+        }
         // 本体と同じ display 変換を先に掛けてから、その座標系で法線方向に少しずらして描く
         poseStack.pushPose();
         base.applyTransform(context, poseStack, false);
         poseStack.translate(0.0f, 0.0f, ORIGIN_Z_FLAT);
         poseStack.scale(ORIGIN_SCALE, ORIGIN_SCALE, ORIGIN_SCALE);
-        BakedModel originModel = itemRenderer.getModel(origin.original(), null, null, 0);
-        itemRenderer.render(origin.original(), ItemDisplayContext.NONE, false, poseStack, buffer, packedLight, packedOverlay, originModel);
+        BakedModel originModel = itemRenderer.getModel(icon, null, null, 0);
+        itemRenderer.render(icon, ItemDisplayContext.NONE, false, poseStack, buffer, packedLight, packedOverlay, originModel);
         poseStack.popPose();
     }
 
@@ -93,11 +98,15 @@ public class EverythingItemRenderer extends BlockEntityWithoutLevelRenderer {
         if (origin == null) {
             return;
         }
+        ItemStack icon = OriginDisplay.iconStack(origin.original());
+        if (icon.isEmpty()) {
+            return;
+        }
         // ItemRenderer.render と同じ display 変換 + 角原点へのずらしを掛けてから、世界と同じ 6 面貼りを使う
         poseStack.pushPose();
         blockModel.applyTransform(context, poseStack, false);
         poseStack.translate(-0.5f, -0.5f, -0.5f);
-        EverythingBlockRenderer.renderOriginOnFaces(origin.original(), poseStack, buffer, packedLight, packedOverlay, null);
+        EverythingBlockRenderer.renderOriginOnFaces(icon, poseStack, buffer, packedLight, packedOverlay, null);
         poseStack.popPose();
     }
 }

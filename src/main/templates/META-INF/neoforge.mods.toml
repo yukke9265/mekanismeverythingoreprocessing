@@ -32,3 +32,11 @@ Mekanism joke addon: turn anything into "Everything Raw Ore", run it through the
     versionRange="${mekanism_version_range}"
     ordering="AFTER"
     side="BOTH"
+
+# JEI is optional; used only to show special crafting recipes.
+[[dependencies.${mod_id}]]
+    modId="jei"
+    type="optional"
+    versionRange="[19.44.0,)"
+    ordering="NONE"
+    side="CLIENT"

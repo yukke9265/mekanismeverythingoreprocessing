@@ -19,11 +19,11 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 
 /**
- * 縺ｪ繧薙〒繧ゅヶ繝ｭ繝・け縺ｮ BlockEntity縲・
+ * なんでもブロックの BlockEntity。
  * <p>
- * 蠖ｹ蜑ｲ縺ｯ縲瑚ｨｭ鄂ｮ縺輔ｌ縺溘ヶ繝ｭ繝・け縺悟・繧｢繧､繝・Β諠・ｱ繧貞ｿ倥ｌ縺ｪ縺・ｈ縺・↓縺吶ｋ縲阪□縺代・
- * 險ｭ鄂ｮ譎ゅ・ BlockItem 縺ｮ Component 縺九ｉ蜿励￠蜿悶ｊ・・pplyImplicitComponents・峨・
- * 遐ｴ螢頑凾縺ｯ loot table 縺ｮ copy_components 縺ｧ Component 縺ｸ謌ｻ縺呻ｼ・ollectImplicitComponents・峨・
+ * 役割は「設置されたブロックが元アイテム情報を忘れないようにする」だけ。
+ * 設置時は BlockItem の Component から受け取り（applyImplicitComponents）、
+ * 破壊時は loot table の copy_components で Component へ返す（collectImplicitComponents）。
  */
 public class EverythingBlockEntity extends BlockEntity {
 
@@ -41,7 +41,7 @@ public class EverythingBlockEntity extends BlockEntity {
         return origin;
     }
 
-    // ------------------------------------------------------------ Component 縺ｨ縺ｮ蜿励￠貂｡縺・
+    // ------------------------------------------------------------ Component との受け渡し
 
     @Override
     protected void applyImplicitComponents(DataComponentInput input) {
@@ -63,7 +63,7 @@ public class EverythingBlockEntity extends BlockEntity {
         tag.remove(TAG_ORIGIN);
     }
 
-    // ------------------------------------------------------------ NBT 菫晏ｭ・
+    // ------------------------------------------------------------ NBT 保存
 
     @Override
     protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
@@ -87,7 +87,7 @@ public class EverythingBlockEntity extends BlockEntity {
         }
     }
 
-    // ------------------------------------------------------------ 繧ｯ繝ｩ繧､繧｢繝ｳ繝亥酔譛滂ｼ医ユ繧｣繝ｳ繝郁牡逕ｨ・・
+    // ------------------------------------------------------------ クライアント同期（ティント用）
 
     @Override
     public CompoundTag getUpdateTag(HolderLookup.Provider registries) {

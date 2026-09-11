@@ -27,10 +27,10 @@ import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 /**
- * 蜈・ュ蝣ｱ繧剃ｿ昴▲縺溘∪縺ｾ蛟区焚繧定ｩｰ繧∵崛縺医ｋ繧ｯ繝ｩ繝輔ヨ・医リ繧ｲ繝・ヨ 竍・繧､繝ｳ繧ｴ繝・ヨ縲√う繝ｳ繧ｴ繝・ヨ 竍・繝悶Ο繝・け・峨・
+ * 元情報を持ったまま個数を詰め替えるクラフト（ナゲット → インゴット、インゴット → ブロック）。
  * <p>
- * from 繧・fromCount 蛟具ｼ亥・縺ｦ蜷後§蜈・ュ蝣ｱ・我ｸｦ縺ｹ繧九→ to 縺・toCount 蛟九〒縺阪ｋ縲・
- * 菴咲ｽｮ縺ｯ蝠上ｏ縺ｪ縺・ｼ井ｸ榊ｮ壼ｽ｢・峨ょ・諠・ｱ縺碁＆縺・い繧､繝・Β縺梧ｷｷ縺悶▲縺ｦ縺・ｋ縺ｨ荳閾ｴ縺励↑縺・・
+ * from を fromCount 個（全て同じ元情報）消費すると to が toCount 個できる。
+ * 位置は問わない（無定形）。元情報が違うアイテムが混ざっていると一致しない。
  */
 public class OriginPackRecipe implements CraftingRecipe {
 
@@ -79,7 +79,7 @@ public class OriginPackRecipe implements CraftingRecipe {
                 sharedOrigin = origin;
                 first = false;
             } else if (!Objects.equals(sharedOrigin, origin)) {
-                // 蜈・ュ蝣ｱ縺梧ｷｷ縺悶▲縺ｦ縺・ｋ
+                // 元情報が混ざっている
                 return false;
             }
             found++;
@@ -112,7 +112,7 @@ public class OriginPackRecipe implements CraftingRecipe {
 
     @Override
     public NonNullList<Ingredient> getIngredients() {
-        // 繝ｬ繧ｷ繝斐ヶ繝・け / JEI 陦ｨ遉ｺ逕ｨ縲ょｮ滄圀縺ｮ蛻､螳壹・ matches 縺ｧ陦後≧
+        // レシピ本 / JEI 表示用。実際の判定は matches で行う
         NonNullList<Ingredient> list = NonNullList.create();
         for (int i = 0; i < fromCount; i++) {
             list.add(Ingredient.of(from.value()));

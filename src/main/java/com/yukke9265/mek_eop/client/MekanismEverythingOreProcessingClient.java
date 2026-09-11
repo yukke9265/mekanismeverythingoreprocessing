@@ -28,7 +28,7 @@ import net.neoforged.neoforge.registries.DeferredItem;
 /**
  * クライアント専用の初期化。
  * <p>
- * なんでも○○の見た目 = 「灰色ベース × power 由来のティント」+「ティント無しオーバーレイ」+「右下に元アイテムの小アイコン」。
+ * なんでも○○の見た目 = 「灰色ベース × power 由来のティント」+「ティント無しオーバーレイ」+「中央に元アイテムアイコン」（ブロックは各面）。
  */
 @Mod(value = MekanismEverythingOreProcessing.MODID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = MekanismEverythingOreProcessing.MODID, value = Dist.CLIENT)

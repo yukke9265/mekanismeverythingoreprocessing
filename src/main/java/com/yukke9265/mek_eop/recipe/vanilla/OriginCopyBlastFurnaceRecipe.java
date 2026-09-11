@@ -11,7 +11,7 @@ import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.item.crafting.SingleRecipeInput;
 
-/** 繝舌ル繝ｩ貅ｶ驩ｱ轤臥畑縲ょ・蜉帙↓蜈･蜉帙・蜈・ュ蝣ｱ繧偵さ繝斐・縺吶ｋ縲・*/
+/** バニラ溶鉱炉用。出力に入力の元情報をコピーする。 */
 public class OriginCopyBlastFurnaceRecipe extends BlastingRecipe {
 
     public OriginCopyBlastFurnaceRecipe(String group, CookingBookCategory category, Ingredient ingredient, ItemStack result, float experience, int cookingTime) {
