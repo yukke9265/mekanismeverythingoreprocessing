@@ -1,3 +1,4 @@
 {
-  "parent": "mekanismeverythingoreprocessing:block/everything_block"
+  "parent": "minecraft:builtin/entity",
+  "gui_light": "side"
 }

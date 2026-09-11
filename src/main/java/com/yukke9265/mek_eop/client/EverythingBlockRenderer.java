@@ -1,5 +1,7 @@
 package com.yukke9265.mek_eop.client;
 
+import org.jetbrains.annotations.Nullable;
+
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.math.Axis;
 import com.yukke9265.mek_eop.block.EverythingBlockEntity;
@@ -13,12 +15,13 @@ import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 
 /**
  * なんでもブロックの世界描画。
  * <p>
  * 通常モデル（ティント付き立方体）の上に、元アイテムのアイコンを各面の中央へ少し小さく重ねる。
- * アイテム版と同じ「中央に元アイテム」を、立方体の 6 面すべてに貼る実験。
+ * 同じ面貼り付けは手持ち・GUI（BEWLR）からも {@link #renderOriginOnFaces} で使う。
  */
 public class EverythingBlockRenderer implements BlockEntityRenderer<EverythingBlockEntity> {
 
@@ -37,9 +40,17 @@ public class EverythingBlockRenderer implements BlockEntityRenderer<EverythingBl
         if (origin == null) {
             return;
         }
-        ItemStack original = origin.original();
-        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
+        renderOriginOnFaces(origin.original(), poseStack, buffer, packedLight, packedOverlay, blockEntity.getLevel());
+    }
 
+    /**
+     * 立方体の 6 面に元アイテムアイコンを貼る。
+     * <p>
+     * 前提: pose はブロックの角が (0,0,0)、辺の長さが 1 のローカル座標（世界の BER と同じ）。
+     */
+    public static void renderOriginOnFaces(ItemStack original, PoseStack poseStack, MultiBufferSource buffer,
+            int packedLight, int packedOverlay, @Nullable Level level) {
+        ItemRenderer itemRenderer = Minecraft.getInstance().getItemRenderer();
         for (Direction face : Direction.values()) {
             poseStack.pushPose();
             // ブロック中心へ移動し、その面の外側が +Z になるよう回転する
@@ -50,7 +61,7 @@ public class EverythingBlockRenderer implements BlockEntityRenderer<EverythingBl
             poseStack.translate(0.0f, 0.0f, FACE_OFFSET);
             poseStack.scale(ORIGIN_SCALE, ORIGIN_SCALE, ORIGIN_SCALE);
             itemRenderer.renderStatic(original, ItemDisplayContext.FIXED, packedLight, packedOverlay,
-                    poseStack, buffer, blockEntity.getLevel(), 0);
+                    poseStack, buffer, level, 0);
             poseStack.popPose();
         }
     }

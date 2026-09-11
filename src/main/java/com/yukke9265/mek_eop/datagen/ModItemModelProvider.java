@@ -19,8 +19,9 @@ import net.neoforged.neoforge.registries.DeferredItem;
  * なんでも○○は 2 つのモデルを持つ:
  * <ul>
  * <li>{@code everything_x_base}: Mekanism 流の 2 層モデル（layer0 = ティント対象のベース、layer1 = ティント無しのオーバーレイ）</li>
- * <li>{@code everything_x}: builtin/entity。描画は EverythingItemRenderer に任せ、そこで base モデル + 元アイテムの小アイコンを描く</li>
+ * <li>{@code everything_x}: builtin/entity。描画は EverythingItemRenderer に任せ、そこで base モデル + 元アイテムを描く</li>
  * </ul>
+ * なんでもブロックも builtin/entity で、見た目本体は {@code block/everything_block} を使う。
  */
 public class ModItemModelProvider extends ItemModelProvider {
 
@@ -37,7 +38,10 @@ public class ModItemModelProvider extends ItemModelProvider {
         everythingItem(ModItems.EVERYTHING_SHARD, true);
         everythingItem(ModItems.EVERYTHING_CRYSTAL, true);
         everythingItem(ModItems.EVERYTHING_INGOT, false);
-        withExistingParent("everything_block", modLoc("block/everything_block"));
+        // ブロックも BEWLR 経由（GUI・手持ちで各面に元アイテムを出す）。見た目本体は block/everything_block
+        getBuilder("everything_block")
+                .parent(new ModelFile.UncheckedModelFile(ResourceLocation.withDefaultNamespace("builtin/entity")))
+                .guiLight(BlockModel.GuiLight.SIDE);
     }
 
     private void everythingItem(DeferredItem<? extends Item> item, boolean hasOverlay) {

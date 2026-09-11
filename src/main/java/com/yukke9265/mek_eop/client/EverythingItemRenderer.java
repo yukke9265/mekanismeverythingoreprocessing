@@ -20,28 +20,31 @@ import net.minecraft.world.item.ItemStack;
 /**
  * なんでも○○の描画。
  * <p>
- * 1. 見た目本体（{@code everything_x_base} モデル。ベース層は power 由来の色でティント）を通常描画する。
- * 2. 元アイテムがあれば、中央に元アイテムのアイコンを少し小さくして重ねる（GUI・手持ち・額縁など全て）。
+ * 1. 見た目本体（平面は {@code everything_x_base}、ブロックは {@code block/everything_block}）を通常描画する。
+ * 2. 元アイテムがあれば重ねる。平面は中央、ブロックは 6 面（世界の BER と同じ）。
  * <p>
  * 登録名のモデルは builtin/entity なので、ItemRenderer はこのクラスに描画を委ねてくる。
  */
 public class EverythingItemRenderer extends BlockEntityWithoutLevelRenderer {
 
-    /** 元アイテムアイコンの大きさ（本体に対する比率）。 */
+    /** 平面アイテムの元アイコンの大きさ（本体に対する比率）。 */
     private static final float ORIGIN_SCALE = 0.7f;
     /** 平面アイテム: 本体（厚み 1/16）の手前に出すための法線方向オフセット。 */
     private static final float ORIGIN_Z_FLAT = 0.1f;
-    /** ブロック: GUI で回転した立方体の手前に出すためのオフセット（GUI は平行投影なので大きくても見た目は変わらない）。 */
-    private static final float ORIGIN_Z_BLOCK = 1.0f;
 
     public EverythingItemRenderer() {
         super(Minecraft.getInstance().getBlockEntityRenderDispatcher(), Minecraft.getInstance().getEntityModels());
     }
 
-    /** アイテム登録名から見た目本体のモデル ID を作る。 */
+    /** 平面アイテムの見た目本体モデル ID。 */
     public static ModelResourceLocation baseModel(ItemStack stack) {
         String name = BuiltInRegistries.ITEM.getKey(stack.getItem()).getPath();
         return ModelResourceLocation.standalone(MekanismEverythingOreProcessing.rl("item/" + ModItems.baseModelPath(name)));
+    }
+
+    /** なんでもブロックの見た目本体（ブロックモデルそのもの）。 */
+    public static ModelResourceLocation blockBaseModel() {
+        return ModelResourceLocation.standalone(MekanismEverythingOreProcessing.rl("block/everything_block"));
     }
 
     @Override
@@ -53,52 +56,48 @@ public class EverythingItemRenderer extends BlockEntityWithoutLevelRenderer {
         poseStack.pushPose();
         poseStack.translate(0.5f, 0.5f, 0.5f);
 
-        // 1. 本体。ItemRenderer.render は内部で push/pop し、モデルの display 変換・-0.5 ずらし・ティントを適用してくれる
-        BakedModel base = minecraft.getModelManager().getModel(baseModel(stack));
-        itemRenderer.render(stack, context, false, poseStack, buffer, packedLight, packedOverlay, base);
-
-        // 2. 元アイテムのアイコン
-        OriginalItem origin = OriginHelper.getOrigin(stack);
-        if (origin != null) {
-            if (stack.getItem() instanceof BlockItem) {
-                renderOriginOnBlock(origin.original(), context, poseStack, buffer, packedLight, packedOverlay, itemRenderer);
-            } else {
-                renderOriginOnFlatItem(origin.original(), context, poseStack, buffer, packedLight, packedOverlay, itemRenderer, base);
-            }
+        if (stack.getItem() instanceof BlockItem) {
+            renderBlockItem(stack, context, poseStack, buffer, packedLight, packedOverlay, itemRenderer, minecraft);
+        } else {
+            renderFlatItem(stack, context, poseStack, buffer, packedLight, packedOverlay, itemRenderer, minecraft);
         }
         poseStack.popPose();
     }
 
-    /**
-     * 平面アイテム用: 本体と同じ display 変換を先に掛けてから、その座標系で法線方向に少しずらして描く。
-     * <p>
-     * こうすると手持ち・三人称・地面でも常に本体の「表面」にアイコンが乗る。
-     * 変換は手動で掛けたので、元アイテム側は NONE（変換なし）で描画する。
-     */
-    private static void renderOriginOnFlatItem(ItemStack original, ItemDisplayContext context, PoseStack poseStack, MultiBufferSource buffer,
-            int packedLight, int packedOverlay, ItemRenderer itemRenderer, BakedModel base) {
+    private static void renderFlatItem(ItemStack stack, ItemDisplayContext context, PoseStack poseStack, MultiBufferSource buffer,
+            int packedLight, int packedOverlay, ItemRenderer itemRenderer, Minecraft minecraft) {
+        BakedModel base = minecraft.getModelManager().getModel(baseModel(stack));
+        itemRenderer.render(stack, context, false, poseStack, buffer, packedLight, packedOverlay, base);
+
+        OriginalItem origin = OriginHelper.getOrigin(stack);
+        if (origin == null) {
+            return;
+        }
+        // 本体と同じ display 変換を先に掛けてから、その座標系で法線方向に少しずらして描く
         poseStack.pushPose();
         base.applyTransform(context, poseStack, false);
         poseStack.translate(0.0f, 0.0f, ORIGIN_Z_FLAT);
         poseStack.scale(ORIGIN_SCALE, ORIGIN_SCALE, ORIGIN_SCALE);
-        BakedModel originModel = itemRenderer.getModel(original, null, null, 0);
-        itemRenderer.render(original, ItemDisplayContext.NONE, false, poseStack, buffer, packedLight, packedOverlay, originModel);
+        BakedModel originModel = itemRenderer.getModel(origin.original(), null, null, 0);
+        itemRenderer.render(origin.original(), ItemDisplayContext.NONE, false, poseStack, buffer, packedLight, packedOverlay, originModel);
         poseStack.popPose();
     }
 
-    /**
-     * ブロック用: GUI のみ。立方体は回転して描かれるので、表面に貼るのではなく画面手前に平面アイコンとして重ねる。
-     * ponytail: 手持ちのブロックには出さない（立方体に貼るには面ごとの処理が必要になるため）。
-     */
-    private static void renderOriginOnBlock(ItemStack original, ItemDisplayContext context, PoseStack poseStack, MultiBufferSource buffer,
-            int packedLight, int packedOverlay, ItemRenderer itemRenderer) {
-        if (context != ItemDisplayContext.GUI) {
+    private static void renderBlockItem(ItemStack stack, ItemDisplayContext context, PoseStack poseStack, MultiBufferSource buffer,
+            int packedLight, int packedOverlay, ItemRenderer itemRenderer, Minecraft minecraft) {
+        BakedModel blockModel = minecraft.getModelManager().getModel(blockBaseModel());
+        // 立方体本体（ティントは ItemColors 経由）
+        itemRenderer.render(stack, context, false, poseStack, buffer, packedLight, packedOverlay, blockModel);
+
+        OriginalItem origin = OriginHelper.getOrigin(stack);
+        if (origin == null) {
             return;
         }
+        // ItemRenderer.render と同じ display 変換 + 角原点へのずらしを掛けてから、世界と同じ 6 面貼りを使う
         poseStack.pushPose();
-        poseStack.translate(0.0f, 0.0f, ORIGIN_Z_BLOCK);
-        poseStack.scale(ORIGIN_SCALE, ORIGIN_SCALE, ORIGIN_SCALE);
-        itemRenderer.renderStatic(original, context, packedLight, packedOverlay, poseStack, buffer, null, 0);
+        blockModel.applyTransform(context, poseStack, false);
+        poseStack.translate(-0.5f, -0.5f, -0.5f);
+        EverythingBlockRenderer.renderOriginOnFaces(origin.original(), poseStack, buffer, packedLight, packedOverlay, null);
         poseStack.popPose();
     }
 }

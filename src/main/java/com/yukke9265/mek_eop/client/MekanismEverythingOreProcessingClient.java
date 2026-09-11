@@ -44,7 +44,7 @@ public class MekanismEverythingOreProcessingClient {
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 
-    /** 見た目本体（*_base）のモデルは登録名と紐付かないので、追加モデルとして読み込ませる。 */
+    /** 見た目本体のモデルは登録名と紐付かないので、追加モデルとして読み込ませる。 */
     @SubscribeEvent
     static void onRegisterAdditionalModels(ModelEvent.RegisterAdditional event) {
         for (DeferredItem<? extends Item> item : ModItems.allEverythingItems()) {
@@ -53,6 +53,8 @@ public class MekanismEverythingOreProcessingClient {
             }
             event.register(EverythingItemRenderer.baseModel(item.get().getDefaultInstance()));
         }
+        // ブロックの見た目本体（BEWLR から参照する）
+        event.register(EverythingItemRenderer.blockBaseModel());
     }
 
     /** 置いたブロックの各面に元アイテムアイコンを重ねる。 */
@@ -74,9 +76,7 @@ public class MekanismEverythingOreProcessingClient {
             }
         };
         for (DeferredItem<? extends Item> item : ModItems.allEverythingItems()) {
-            if (item != ModItems.EVERYTHING_BLOCK) {
-                event.registerItem(extensions, item.get());
-            }
+            event.registerItem(extensions, item.get());
         }
     }
 
