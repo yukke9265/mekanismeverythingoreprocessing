@@ -29,8 +29,11 @@ public class EverythingBlockRenderer implements BlockEntityRenderer<EverythingBl
 
     /** 面に対するアイコンの大きさ（ブロック辺に対する比率）。 */
     private static final float ORIGIN_SCALE = 0.5f;
-    /** scale 後にアイテム中心を面から外へ出す量（render の -0.5 ずらしで厚み半分が内側に食うのを相殺）。 */
-    private static final float OUTWARD_AFTER_SCALE = 0.51f;
+    /**
+     * scale 後にアイテム中心を面から外へ出す量（render の -0.5 ずらしで厚み半分が内側に食うのを相殺）。
+     * 以前は 0.51（≒0.25 ブロック相当）で飛び出し過ぎだったので、表面すれすれの隙間だけ残す。
+     */
+    private static final float OUTWARD_AFTER_SCALE = 0.02f;
 
     public EverythingBlockRenderer(BlockEntityRendererProvider.Context context) {
     }
