@@ -3,6 +3,7 @@ package com.yukke9265.mek_eop.client;
 import com.yukke9265.mek_eop.MekanismEverythingOreProcessing;
 import com.yukke9265.mek_eop.block.EverythingBlockEntity;
 import com.yukke9265.mek_eop.component.OriginalItem;
+import com.yukke9265.mek_eop.registry.ModBlockEntities;
 import com.yukke9265.mek_eop.registry.ModBlocks;
 import com.yukke9265.mek_eop.registry.ModItems;
 import com.yukke9265.mek_eop.util.OriginHelper;
@@ -15,6 +16,7 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.event.ModelEvent;
 import net.neoforged.neoforge.client.event.RegisterColorHandlersEvent;
 import net.neoforged.neoforge.client.extensions.common.IClientItemExtensions;
@@ -51,6 +53,12 @@ public class MekanismEverythingOreProcessingClient {
             }
             event.register(EverythingItemRenderer.baseModel(item.get().getDefaultInstance()));
         }
+    }
+
+    /** 置いたブロックの各面に元アイテムアイコンを重ねる。 */
+    @SubscribeEvent
+    static void onRegisterRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(ModBlockEntities.EVERYTHING_BLOCK.get(), EverythingBlockRenderer::new);
     }
 
     /** 登録名のモデル（builtin/entity）の描画先として独自レンダラーを結び付ける。 */

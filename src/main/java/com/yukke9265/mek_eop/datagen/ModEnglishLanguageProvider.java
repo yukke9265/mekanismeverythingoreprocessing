@@ -39,10 +39,11 @@ public class ModEnglishLanguageProvider extends LanguageProvider {
         add("tooltip." + MODID + ".nesting", "Nesting depth: %s");
         add("tooltip." + MODID + ".power", "Power: %s");
 
-        add("chemical." + MODID + ".dirty_everything_slurry", "Dirty Everything Slurry (%s)");
-        add("chemical." + MODID + ".dirty_everything_slurry.unknown", "Dirty Everything Slurry (Unknown)");
-        add("chemical." + MODID + ".clean_everything_slurry", "Clean Everything Slurry (%s)");
-        add("chemical." + MODID + ".clean_everything_slurry.unknown", "Clean Everything Slurry (Unknown)");
+        // アイテム名と同じ「"元アイテム" ～」形式
+        add("chemical." + MODID + ".dirty_everything_slurry", "\"%s\" Dirty Slurry");
+        add("chemical." + MODID + ".dirty_everything_slurry.unknown", "\"Unknown\" Dirty Slurry");
+        add("chemical." + MODID + ".clean_everything_slurry", "\"%s\" Clean Slurry");
+        add("chemical." + MODID + ".clean_everything_slurry.unknown", "\"Unknown\" Clean Slurry");
 
         // Config 画面
         add(MODID + ".configuration.slurryNamespaceWhitelist", "Slurry namespace whitelist");

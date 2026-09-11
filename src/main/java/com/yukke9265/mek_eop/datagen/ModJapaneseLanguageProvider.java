@@ -39,10 +39,11 @@ public class ModJapaneseLanguageProvider extends LanguageProvider {
         add("tooltip." + MODID + ".nesting", "入れ子の深さ: %s");
         add("tooltip." + MODID + ".power", "パワー: %s");
 
-        add("chemical." + MODID + ".dirty_everything_slurry", "なんでもダーティスラリー（%s）");
-        add("chemical." + MODID + ".dirty_everything_slurry.unknown", "なんでもダーティスラリー（不明）");
-        add("chemical." + MODID + ".clean_everything_slurry", "なんでもクリーンスラリー（%s）");
-        add("chemical." + MODID + ".clean_everything_slurry.unknown", "なんでもクリーンスラリー（不明）");
+        // アイテム名と同じ「"元アイテム" ～」形式
+        add("chemical." + MODID + ".dirty_everything_slurry", "\"%s\" ダーティスラリー");
+        add("chemical." + MODID + ".dirty_everything_slurry.unknown", "\"不明\" ダーティスラリー");
+        add("chemical." + MODID + ".clean_everything_slurry", "\"%s\" クリーンスラリー");
+        add("chemical." + MODID + ".clean_everything_slurry.unknown", "\"不明\" クリーンスラリー");
 
         add(MODID + ".configuration.slurryNamespaceWhitelist", "スラリー生成対象の namespace");
         add(MODID + ".configuration.originStorageMode", "元アイテムの保存形式");

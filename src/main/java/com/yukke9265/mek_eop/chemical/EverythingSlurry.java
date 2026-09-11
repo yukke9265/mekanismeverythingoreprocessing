@@ -11,7 +11,7 @@ import net.minecraft.world.item.Item;
  * なんでもスラリー。
  * <p>
  * 対応する元アイテム（sourceItem）を 1 つだけ持つ。null のときは「対応不明」の汎用スラリー。
- * 表示名は「Dirty Everything Slurry (Diamond)」のように元アイテム名を添える。
+ * 表示名は「"Diamond" Dirty Slurry」のように、アイテム名と同じ「"元アイテム" ～」形式。
  */
 public class EverythingSlurry extends Chemical {
 
