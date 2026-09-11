@@ -7,6 +7,7 @@ modId="${mod_id}"
 version="${mod_version}"
 displayName="${mod_name}"
 authors="yukke9265"
+logoFile="logo.png"
 description='''
 Mekanism joke addon: turn anything into "Everything Raw Ore", run it through the ore processing chain, and restore it.
 '''
