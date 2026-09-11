@@ -5,7 +5,7 @@ Mekanism のジョークアドオン。**あらゆるアイテムを「なんで
 - Minecraft 1.21.1 / NeoForge 21.1 / Mekanism 10.7
 - ライセンス: MIT（ベーステクスチャは MIT の Mekanism のものを灰色化して使用）
 
-![Logo](src/main/resources/logo.png)
+![image](Description_image.png)
 
 ## 流れ
 
